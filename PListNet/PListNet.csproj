@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Version>3.2.0</Version>
-		<TargetFramework>netstandard1.0</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<Description>.Net Library for working with Apple *.plist files.</Description>
 		<Copyright>Copyright © 2009-2020</Copyright>
 		<AssemblyVersion>3.2.0.0</AssemblyVersion>
