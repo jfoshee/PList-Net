@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using PListNet.Nodes;
+﻿using PListNet.Nodes;
 
 namespace PListNet.Internal
 {

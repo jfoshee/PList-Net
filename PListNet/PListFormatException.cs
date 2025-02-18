@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PListNet
+﻿namespace PListNet
 {
 	/// <summary>
 	/// PListNet format exception.
