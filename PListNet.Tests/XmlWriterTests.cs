@@ -95,6 +95,8 @@ public class XmlWriterTests
 			using (var reader = new StreamReader(stream, Encoding.Default, true, 2048, true))
 			{
 				source = reader.ReadToEnd();
+				// Replace the line endings from the source file with the Apple standard line ending
+				source = source.Replace("\r\n", "\n");
 			}
 			stream.Seek(0, SeekOrigin.Begin);
 
