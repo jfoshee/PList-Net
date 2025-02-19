@@ -10,7 +10,7 @@ public class FillNode : PNode
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "fill";
+	public override string XmlTag => "fill";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

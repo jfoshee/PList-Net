@@ -11,7 +11,7 @@ namespace PListNet
 		/// 	Gets the xml tag.
 		/// </summary>
 		/// <value>The xml tag.</value>
-		internal abstract string XmlTag { get; }
+		public abstract string XmlTag { get; }
 
 		/// <summary>
 		/// 	Gets the binary tag.

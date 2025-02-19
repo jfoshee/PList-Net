@@ -7,7 +7,7 @@ namespace PListNet.Nodes;
 /// </summary>
 public class UidNode : PNode<ulong>
 {
-	internal override string XmlTag => "uid";
+	public override string XmlTag => "uid";
 
 	internal override byte BinaryTag => 8;
 

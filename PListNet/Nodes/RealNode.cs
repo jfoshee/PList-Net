@@ -12,7 +12,7 @@ public sealed class RealNode : PNode<double>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "real";
+	public override string XmlTag => "real";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

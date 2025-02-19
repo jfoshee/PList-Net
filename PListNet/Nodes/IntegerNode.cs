@@ -12,7 +12,7 @@ public class IntegerNode : PNode<long>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "integer";
+	public override string XmlTag => "integer";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

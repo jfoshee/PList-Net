@@ -9,7 +9,7 @@ public sealed class DataNode : PNode<byte[]>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "data";
+	public override string XmlTag => "data";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

@@ -13,7 +13,7 @@ public sealed class DateNode : PNode<DateTime>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "date";
+	public override string XmlTag => "date";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

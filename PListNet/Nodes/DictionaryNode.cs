@@ -14,7 +14,7 @@ public class DictionaryNode : PNode, IDictionary<string, PNode>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "dict";
+	public override string XmlTag => "dict";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

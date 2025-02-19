@@ -35,7 +35,7 @@ public class StringNode : PNode<string>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "string";
+	public override string XmlTag => "string";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

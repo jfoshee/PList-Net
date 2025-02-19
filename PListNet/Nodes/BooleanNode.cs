@@ -11,7 +11,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "boolean";
+	public override string XmlTag => "boolean";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.

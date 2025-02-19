@@ -14,7 +14,7 @@ public class ArrayNode : PNode, IList<PNode>
 	/// Gets the Xml tag of this element.
 	/// </summary>
 	/// <value>The Xml tag of this element.</value>
-	internal override string XmlTag => "array";
+	public override string XmlTag => "array";
 
 	/// <summary>
 	/// Gets the binary typecode of this element.
