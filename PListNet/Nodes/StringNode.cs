@@ -1,14 +1,14 @@
 ﻿using System.Text;
 using System.Xml;
 
-namespace PListNet.Nodes
+namespace PListNet.Nodes;
+
+/// <summary>
+/// Represents an string Value from a PList 
+/// </summary>
+public class StringNode : PNode<string>
 {
-	/// <summary>
-	/// Represents an string Value from a PList 
-	/// </summary>
-	public class StringNode : PNode<string>
-	{
-		private static readonly byte[] _utf8Bytes = { 
+	private static readonly byte[] _utf8Bytes = {
 			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
 			0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
 			0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F,
@@ -27,126 +27,125 @@ namespace PListNet.Nodes
 			0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF
 		};
 
-		private static readonly HashSet<char> _utf8Chars = new HashSet<char>(Encoding.UTF8.GetChars(_utf8Bytes));
+	private static readonly HashSet<char> _utf8Chars = new HashSet<char>(Encoding.UTF8.GetChars(_utf8Bytes));
 
-		private string _value;
+	private string _value;
 
-		/// <summary>
-		/// Gets the Xml tag of this element.
-		/// </summary>
-		/// <value>The Xml tag of this element.</value>
-		internal override string XmlTag => "string";
+	/// <summary>
+	/// Gets the Xml tag of this element.
+	/// </summary>
+	/// <value>The Xml tag of this element.</value>
+	internal override string XmlTag => "string";
 
-	    /// <summary>
-		/// Gets the binary typecode of this element.
-		/// </summary>
-		/// <value>The binary typecode of this element.</value>
-		internal override byte BinaryTag => (byte) (IsUtf16 ? 6 : 5);
+	/// <summary>
+	/// Gets the binary typecode of this element.
+	/// </summary>
+	/// <value>The binary typecode of this element.</value>
+	internal override byte BinaryTag => (byte)(IsUtf16 ? 6 : 5);
 
-	    /// <summary>
-		/// Gets the length of this PList element.
-		/// </summary>
-		/// <returns>The length of this PList element.</returns>
-		internal override int BinaryLength => Value.Length;
+	/// <summary>
+	/// Gets the length of this PList element.
+	/// </summary>
+	/// <returns>The length of this PList element.</returns>
+	internal override int BinaryLength => Value.Length;
 
-	    /// <summary>
-		/// Gets or sets a value indicating whether this instance is UTF16.
-		/// </summary>
-		/// <value><c>true</c> if this instance is UTF16; otherwise, <c>false</c>.</value>
-		internal bool IsUtf16 { get; set; }
+	/// <summary>
+	/// Gets or sets a value indicating whether this instance is UTF16.
+	/// </summary>
+	/// <value><c>true</c> if this instance is UTF16; otherwise, <c>false</c>.</value>
+	internal bool IsUtf16 { get; set; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="StringNode"/> class.
-		/// </summary>
-		public StringNode()
+	/// <summary>
+	/// Initializes a new instance of the <see cref="StringNode"/> class.
+	/// </summary>
+	public StringNode()
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="StringNode"/> class.
+	/// </summary>
+	/// <param name="value">The value.</param>
+	public StringNode(string value)
+	{
+		Value = value;
+	}
+
+	/// <summary>
+	/// Gets or sets the value of this element.
+	/// </summary>
+	/// <value>The value of this element.</value>
+	public sealed override string Value
+	{
+		get => _value;
+		set
 		{
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="StringNode"/> class.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		public StringNode(string value)
-		{
-			Value = value;
-		}
-
-		/// <summary>
-		/// Gets or sets the value of this element.
-		/// </summary>
-		/// <value>The value of this element.</value>
-		public sealed override string Value
-		{
-			get => _value;
-		    set
+			_value = value;
+			//Detect Encoding
+			foreach (char c in value)
 			{
-				_value = value;
-				//Detect Encoding
-				foreach (char c in value)
+				if (!_utf8Chars.Contains(c))
 				{
-					if (!_utf8Chars.Contains(c))
-					{
-						IsUtf16 = true;
-						return;
-					}
+					IsUtf16 = true;
+					return;
 				}
-				IsUtf16 = false;
 			}
+			IsUtf16 = false;
 		}
+	}
 
-		/// <summary>
-		/// Parses the specified value from a given string, read from Xml.
-		/// </summary>
-		/// <param name="data">The string whis is parsed.</param>
-		internal override void Parse(string data)
+	/// <summary>
+	/// Parses the specified value from a given string, read from Xml.
+	/// </summary>
+	/// <param name="data">The string whis is parsed.</param>
+	internal override void Parse(string data)
+	{
+		Value = data;
+	}
+
+	internal override void WriteXml(XmlWriter writer)
+	{
+		// use "ustring" tag for single-byte and "ustring" for UTF-16 characters
+		var tag = IsUtf16 ? "ustring" : "string";
+		writer.WriteStartElement(tag);
+		writer.WriteValue(ToXmlString());
+		writer.WriteEndElement();
+	}
+
+	/// <summary>
+	/// Gets the XML string representation of the Value.
+	/// </summary>
+	/// <returns>
+	/// The XML string representation of the Value.
+	/// </returns>
+	internal override string ToXmlString()
+	{
+		return Value;
+	}
+
+	/// <summary>
+	/// Reads this element binary from the reader.
+	/// </summary>
+	internal override void ReadBinary(Stream stream, int nodeLength)
+	{
+		var buf = new byte[nodeLength * (BinaryTag == 5 ? 1 : 2)];
+		if (stream.Read(buf, 0, buf.Length) != buf.Length)
 		{
-			Value = data;
+			throw new PListFormatException();
 		}
 
-		internal override void WriteXml(XmlWriter writer)
-		{
-			// use "ustring" tag for single-byte and "ustring" for UTF-16 characters
-			var tag = IsUtf16 ? "ustring" : "string";
-			writer.WriteStartElement(tag);
-			writer.WriteValue(ToXmlString());
-			writer.WriteEndElement();
-		}
+		var encoding = BinaryTag == 5 ? Encoding.UTF8 : Encoding.BigEndianUnicode;
 
-		/// <summary>
-		/// Gets the XML string representation of the Value.
-		/// </summary>
-		/// <returns>
-		/// The XML string representation of the Value.
-		/// </returns>
-		internal override string ToXmlString()
-		{
-			return Value;
-		}
+		Value = encoding.GetString(buf, 0, buf.Length);
+	}
 
-		/// <summary>
-		/// Reads this element binary from the reader.
-		/// </summary>
-		internal override void ReadBinary(Stream stream, int nodeLength)
-		{
-			var buf = new byte[nodeLength * (BinaryTag == 5 ? 1 : 2)];
-			if (stream.Read(buf, 0, buf.Length) != buf.Length)
-			{
-				throw new PListFormatException();
-			}
-
-			var encoding = BinaryTag == 5 ? Encoding.UTF8 : Encoding.BigEndianUnicode;
-
-			Value = encoding.GetString(buf, 0, buf.Length);
-		}
-
-		/// <summary>
-		/// Writes this element binary to the writer.
-		/// </summary>
-		internal override void WriteBinary(Stream stream)
-		{
-			Encoding enc = IsUtf16 ? Encoding.BigEndianUnicode : Encoding.UTF8;
-			var buf = enc.GetBytes(Value);
-			stream.Write(buf, 0, buf.Length);
-		}
+	/// <summary>
+	/// Writes this element binary to the writer.
+	/// </summary>
+	internal override void WriteBinary(Stream stream)
+	{
+		Encoding enc = IsUtf16 ? Encoding.BigEndianUnicode : Encoding.UTF8;
+		var buf = enc.GetBytes(Value);
+		stream.Write(buf, 0, buf.Length);
 	}
 }

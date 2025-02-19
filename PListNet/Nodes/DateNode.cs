@@ -2,106 +2,105 @@
 using System.Globalization;
 using BitConverter;
 
-namespace PListNet.Nodes
+namespace PListNet.Nodes;
+
+/// <summary>
+/// Represents a DateTime Value from a PList
+/// </summary>
+public sealed class DateNode : PNode<DateTime>
 {
 	/// <summary>
-	/// Represents a DateTime Value from a PList
+	/// Gets the Xml tag of this element.
 	/// </summary>
-	public sealed class DateNode : PNode<DateTime>
+	/// <value>The Xml tag of this element.</value>
+	internal override string XmlTag => "date";
+
+	/// <summary>
+	/// Gets the binary typecode of this element.
+	/// </summary>
+	/// <value>The binary typecode of this element.</value>
+	internal override byte BinaryTag => 3;
+
+	internal override int BinaryLength => 3;
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="DateNode"/> class.
+	/// </summary>
+	public DateNode()
 	{
-		/// <summary>
-		/// Gets the Xml tag of this element.
-		/// </summary>
-		/// <value>The Xml tag of this element.</value>
-		internal override string XmlTag => "date";
+	}
 
-	    /// <summary>
-		/// Gets the binary typecode of this element.
-		/// </summary>
-		/// <value>The binary typecode of this element.</value>
-		internal override byte BinaryTag => 3;
+	/// <summary>
+	/// Initializes a new instance of the <see cref="DateNode"/> class.
+	/// </summary>
+	/// <param name="value">The value of this element.</param>
+	public DateNode(DateTime value)
+	{
+		Value = value;
+	}
 
-	    internal override int BinaryLength => 3;
+	/// <summary>
+	/// Parses the specified value from a given string, read from Xml.
+	/// </summary>
+	/// <param name="data">The string whis is parsed.</param>
+	internal override void Parse(string data)
+	{
+		Value = DateTime.Parse(data, CultureInfo.InvariantCulture);
+	}
 
-	    /// <summary>
-		/// Initializes a new instance of the <see cref="DateNode"/> class.
-		/// </summary>
-		public DateNode()
+	/// <summary>
+	/// Gets the XML string representation of the Value.
+	/// </summary>
+	/// <returns>
+	/// The XML string representation of the Value.
+	/// </returns>
+	internal override string ToXmlString()
+	{
+		return Value.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffZ");
+	}
+
+	/// <summary>
+	/// Reads this element binary from the reader.
+	/// </summary>
+	internal override void ReadBinary(Stream stream, int nodeLength)
+	{
+		Debug.WriteLine("Unverified");
+
+		var buf = new byte[1 << nodeLength];
+		if (stream.Read(buf, 0, buf.Length) != buf.Length)
+			throw new PListFormatException();
+
+		double ticks;
+		switch (nodeLength)
 		{
+			case 0:
+				throw new PListFormatException("Date < 32Bit");
+			case 1:
+				throw new PListFormatException("Date < 32Bit");
+			case 2:
+				ticks = EndianBitConverter.BigEndian.ToSingle(buf, 0);
+				break;
+			case 3:
+				ticks = EndianBitConverter.BigEndian.ToDouble(buf, 0);
+				break;
+			default:
+				throw new PListFormatException("Date > 64Bit");
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DateNode"/> class.
-		/// </summary>
-		/// <param name="value">The value of this element.</param>
-		public DateNode(DateTime value)
-		{
-			Value = value;
-		}
+		Value = new DateTime(2001, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(ticks);
+	}
 
-		/// <summary>
-		/// Parses the specified value from a given string, read from Xml.
-		/// </summary>
-		/// <param name="data">The string whis is parsed.</param>
-		internal override void Parse(string data)
-		{
-			Value = DateTime.Parse(data, CultureInfo.InvariantCulture);
-		}
+	/// <summary>
+	/// Writes this element binary to the writer.
+	/// </summary>
+	internal override void WriteBinary(Stream stream)
+	{
+		Debug.WriteLine("Unverified");
 
-		/// <summary>
-		/// Gets the XML string representation of the Value.
-		/// </summary>
-		/// <returns>
-		/// The XML string representation of the Value.
-		/// </returns>
-		internal override string ToXmlString()
-		{
-			return Value.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffZ");
-		}
+		var start = new DateTime(2001, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-		/// <summary>
-		/// Reads this element binary from the reader.
-		/// </summary>
-		internal override void ReadBinary(Stream stream, int nodeLength)
-		{
-			Debug.WriteLine("Unverified");
-
-			var buf = new byte[1 << nodeLength];
-			if (stream.Read(buf, 0, buf.Length) != buf.Length)
-				throw new PListFormatException();
-
-			double ticks;
-			switch (nodeLength)
-			{
-				case 0:
-					throw new PListFormatException("Date < 32Bit");
-				case 1:
-					throw new PListFormatException("Date < 32Bit");
-				case 2:
-					ticks = EndianBitConverter.BigEndian.ToSingle(buf, 0);
-					break;
-				case 3:
-					ticks = EndianBitConverter.BigEndian.ToDouble(buf, 0);
-					break;
-				default:
-					throw new PListFormatException("Date > 64Bit");
-			}
-
-			Value = new DateTime(2001, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(ticks);
-		}
-
-		/// <summary>
-		/// Writes this element binary to the writer.
-		/// </summary>
-		internal override void WriteBinary(Stream stream)
-		{
-			Debug.WriteLine("Unverified");
-
-			var start = new DateTime(2001, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-			TimeSpan ts = Value - start;
-			var buf = EndianBitConverter.BigEndian.GetBytes(ts.TotalSeconds);
-			stream.Write(buf, 0, buf.Length);
-		}
+		TimeSpan ts = Value - start;
+		var buf = EndianBitConverter.BigEndian.GetBytes(ts.TotalSeconds);
+		stream.Write(buf, 0, buf.Length);
 	}
 }

@@ -1,30 +1,29 @@
 ﻿using System.Xml;
 
-namespace PListNet.Internal
+namespace PListNet.Internal;
+
+/// <summary>
+/// Reader for XML format PList documents.
+/// </summary>
+public static class XmlFormatReader
 {
 	/// <summary>
-	/// Reader for XML format PList documents.
+	/// Read document from the specified stream.
 	/// </summary>
-	public static class XmlFormatReader
+	/// <param name="stream">Stream.</param>
+	public static PNode Read(Stream stream)
 	{
-		/// <summary>
-		/// Read document from the specified stream.
-		/// </summary>
-		/// <param name="stream">Stream.</param>
-		public static PNode Read(Stream stream)
+		var settings = new XmlReaderSettings();
+		using (var reader = XmlReader.Create(stream, settings))
 		{
-			var settings = new XmlReaderSettings();
-			using (var reader = XmlReader.Create(stream, settings))
-			{
-				reader.ReadStartElement("plist");
+			reader.ReadStartElement("plist");
 
-				var node = NodeFactory.Create(reader.LocalName);
-				node.ReadXml(reader);
+			var node = NodeFactory.Create(reader.LocalName);
+			node.ReadXml(reader);
 
-				reader.ReadEndElement();
+			reader.ReadEndElement();
 
-				return node;
-			}
+			return node;
 		}
 	}
 }
