@@ -80,7 +80,7 @@ public class XmlWriterTests
 			{
 				var contents = reader.ReadToEnd();
 
-				Assert.True(contents.Contains("<true/>"));
+				Assert.Contains("<true/>", contents);
 			}
 		}
 	}
@@ -147,7 +147,7 @@ public class XmlWriterTests
 			{
 				var contents = reader.ReadToEnd();
 
-				Assert.True(contents.Contains($"<ustring>{utf16value}</ustring>"));
+				Assert.Contains($"<ustring>{utf16value}</ustring>", contents);
 			}
 		}
 	}

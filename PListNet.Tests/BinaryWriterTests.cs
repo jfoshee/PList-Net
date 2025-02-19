@@ -22,8 +22,8 @@ public class BinaryWriterTests
 				// compare
 				Assert.Equal(node.GetType().Name, newNode.GetType().Name);
 
-				var oldDict = node as DictionaryNode;
-				var newDict = newNode as DictionaryNode;
+				var oldDict = (DictionaryNode)node;
+				var newDict = (DictionaryNode)newNode;
 
 				Assert.Equal(oldDict.Count, newDict.Count);
 

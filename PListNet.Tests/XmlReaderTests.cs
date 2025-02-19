@@ -81,7 +81,7 @@ public class XmlReaderTests
 			Assert.IsType<DictionaryNode>(root["Entitlements"]);
 			var dict = root["Entitlements"] as DictionaryNode;
 
-			var array = dict["com.apple.developer.icloud-container-identifiers"] as ArrayNode;
+			var array = dict?["com.apple.developer.icloud-container-identifiers"] as ArrayNode;
 			Assert.NotNull(array);
 			Assert.Empty(array);
 		}
