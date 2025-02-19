@@ -21,9 +21,6 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="Tests\**" />
-	  <EmbeddedResource Remove="Tests\**" />
-	  <None Remove="Tests\**" />
 	  <None Include="..\LICENSE.MD">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
@@ -32,9 +29,6 @@
 	<ItemGroup>
 	  <None Remove="CreateNuGetPackage.cmd" />
 	  <None Remove="PListNet.nuspec" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Properties\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="EndianBitConverter" Version="1.1.0" />
