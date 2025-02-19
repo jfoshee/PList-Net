@@ -17,6 +17,11 @@ public class DictionaryNode : PNode, IDictionary<string, PNode>
 	public override string XmlTag => "dict";
 
 	/// <summary>
+	/// Gets the Xml tag for keys.
+	/// </summary>
+	public virtual string XmlKeyTag => "key";
+
+	/// <summary>
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
@@ -68,7 +73,7 @@ public class DictionaryNode : PNode, IDictionary<string, PNode>
 
 		while (reader.NodeType != XmlNodeType.EndElement)
 		{
-			reader.ReadStartElement("key");
+			reader.ReadStartElement(XmlKeyTag);
 			string key = reader.ReadContentAsString();
 			reader.ReadEndElement();
 
@@ -93,7 +98,7 @@ public class DictionaryNode : PNode, IDictionary<string, PNode>
 
 		foreach (var key in Keys)
 		{
-			writer.WriteStartElement("key");
+			writer.WriteStartElement(XmlKeyTag);
 			writer.WriteValue(key);
 			writer.WriteEndElement();
 
