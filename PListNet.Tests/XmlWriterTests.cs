@@ -86,6 +86,51 @@ public class XmlWriterTests
 	}
 
 	[Fact]
+	public void WhenXmlIsSaved_ThenDoctypeIsWritten()
+	{
+		using (var outStream = new MemoryStream())
+		{
+			// create basic PList containing a string value
+			var node = new DictionaryNode { { "Test", new StringNode("value") } };
+
+			// save and reset stream
+			PList.Save(node, outStream, PListFormat.Xml);
+			outStream.Seek(0, SeekOrigin.Begin);
+
+			// check that the doctype is written
+			using (var reader = new StreamReader(outStream))
+			{
+				var contents = reader.ReadToEnd();
+
+				Assert.Contains(@"<!DOCTYPE plist PUBLIC ""-//Apple Computer//DTD PLIST 1.0//EN"" ""http://www.apple.com/DTDs/PropertyList-1.0.dtd"">", contents);
+			}
+		}
+	}
+
+	[Fact]
+	public void WhenDisabled_ThenDoctypeIsNotWritten()
+	{
+		using (var outStream = new MemoryStream())
+		{
+			// create basic PList containing a string value
+			var node = new DictionaryNode { { "Test", new StringNode("value") } };
+
+			// save and reset stream
+			var options = new PListOptions(PListFormat.Xml, WriteDocType: false);
+			PList.Save(node, outStream, options);
+			outStream.Seek(0, SeekOrigin.Begin);
+
+			// check that the doctype is written
+			using (var reader = new StreamReader(outStream))
+			{
+				var contents = reader.ReadToEnd();
+
+				Assert.DoesNotContain(@"<!DOCTYPE", contents);
+			}
+		}
+	}
+
+	[Fact]
 	public void WhenXmlPlistWithBooleanValueIsLoadedAndSaved_ThenWhiteSpaceMatches()
 	{
 		using (var stream = TestFileHelper.GetTestFileStream("TestFiles/github-20.plist"))

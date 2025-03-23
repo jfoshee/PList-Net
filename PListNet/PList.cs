@@ -73,9 +73,18 @@ public static class PList
 	/// <param name="rootNode">Root node of the PList structure.</param>
 	/// <param name="stream">The stream in which the PList is saves.</param>
 	/// <param name="format">The format of the PList (Binary/Xml).</param>
-	public static void Save(PNode rootNode, Stream stream, PListFormat format)
+	public static void Save(PNode rootNode, Stream stream, PListFormat format) =>
+		Save(rootNode, stream, new PListOptions(format));
+
+	/// <summary>
+	/// Saves the PList to the specified stream.
+	/// </summary>
+	/// <param name="rootNode">Root node of the PList structure.</param>
+	/// <param name="stream">The stream in which the PList is saves.</param>
+	/// <param name="options">The options to use when saving the PList.</param>
+	public static void Save(PNode rootNode, Stream stream, PListOptions options)
 	{
-		if (format == PListFormat.Xml)
+		if (options.PListFormat == PListFormat.Xml)
 		{
 			const string newLine = "\n";
 
@@ -92,10 +101,13 @@ public static class PList
 				using (var xmlWriter = XmlWriter.Create(tmpStream, sets))
 				{
 					xmlWriter.WriteStartDocument();
-					xmlWriter.WriteDocType("plist", "-//Apple Computer//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd", null);
+					if (options.WriteDocType)
+					{
+						xmlWriter.WriteDocType("plist", "-//Apple Computer//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd", null);
+					}
 
 					// write out nodes, wrapped in plist root element
-					xmlWriter.WriteStartElement("plist");
+						xmlWriter.WriteStartElement("plist");
 					xmlWriter.WriteAttributeString("version", "1.0");
 					rootNode.WriteXml(xmlWriter);
 					xmlWriter.WriteEndElement();

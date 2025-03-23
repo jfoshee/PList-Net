@@ -2,18 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>4.0.0</Version>
+		<Version>4.1.0</Version>
 		<Description>.NET Library for working with Apple *.plist files.</Description>
 		<PackageId>PListNet.CustomTag</PackageId>
 		<Authors>Vijay Santhanam, Christian Ecker, Michael Teper</Authors>
 		<PackageProjectUrl>https://github.com/jfoshee/PList-Net</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/jfoshee/PList-Net.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageReleaseNotes>4.0 Fork of PListNet that allows customizing XML tags for key and
-			dictionary</PackageReleaseNotes>
+		<PackageReleaseNotes>4.1 Add option to disable Doctype in XML</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.MD</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Copyright>© 2009–2025</Copyright>
+		<Copyright>© 2009-2025</Copyright>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<!-- <Nullable>enable</Nullable> -->
