@@ -97,7 +97,7 @@ public class StringNode : PNode<string>
 	/// <summary>
 	/// Parses the specified value from a given string, read from Xml.
 	/// </summary>
-	/// <param name="data">The string whis is parsed.</param>
+	/// <param name="data">The string which is parsed.</param>
 	internal override void Parse(string data)
 	{
 		Value = data;
@@ -105,8 +105,8 @@ public class StringNode : PNode<string>
 
 	internal override void WriteXml(XmlWriter writer)
 	{
-		// use "ustring" tag for single-byte and "ustring" for UTF-16 characters
-		var tag = IsUtf16 ? "ustring" : "string";
+		// use "ustring" for UTF-16 characters (if XmlTag is not overridden)
+		var tag = XmlTag == "string" && IsUtf16 ? "ustring" : XmlTag;
 		writer.WriteStartElement(tag);
 		writer.WriteValue(ToXmlString());
 		writer.WriteEndElement();
