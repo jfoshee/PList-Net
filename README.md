@@ -1,5 +1,10 @@
 # PList-Net
 
+This fork of PListNet allows customizing XML tags for key and
+dictionary.
+
+You can extend `DictionaryNode` and override `XmlTag` and `XmlKeyTag`.
+
 ## Summary
 .Net Library for working with Apple *.plist Files.
 
