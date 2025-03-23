@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a byte[] Value from a PList
 /// </summary>
-public sealed class DataNode : PNode<byte[]>
+public class DataNode : PNode<byte[]>
 {
 	/// <summary>
 	/// Gets the Xml tag of this element.

@@ -5,7 +5,7 @@ namespace PListNet.Nodes;
 /// <summary>
 /// Represents a Boolean Value from a PList
 /// </summary>
-public sealed class BooleanNode : PNode<bool>
+public class BooleanNode : PNode<bool>
 {
 	/// <summary>
 	/// Gets the Xml tag of this element.

@@ -6,7 +6,7 @@ namespace PListNet.Nodes;
 /// <summary>
 /// Represents a double Value from a PList
 /// </summary>
-public sealed class RealNode : PNode<double>
+public class RealNode : PNode<double>
 {
 	/// <summary>
 	/// Gets the Xml tag of this element.

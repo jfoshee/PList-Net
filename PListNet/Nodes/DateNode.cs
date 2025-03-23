@@ -7,7 +7,7 @@ namespace PListNet.Nodes;
 /// <summary>
 /// Represents a DateTime Value from a PList
 /// </summary>
-public sealed class DateNode : PNode<DateTime>
+public class DateNode : PNode<DateTime>
 {
 	/// <summary>
 	/// Gets the Xml tag of this element.
