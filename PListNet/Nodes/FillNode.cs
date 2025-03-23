@@ -16,12 +16,12 @@ public class FillNode : PNode
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
-	internal override byte BinaryTag => 0;
+	public override byte BinaryTag => 0;
 
 	/// <summary>
 	/// Gets the length of this PList node.
 	/// </summary>
-	internal override int BinaryLength => 0x0F;
+	public override int BinaryLength => 0x0F;
 
 	/// <summary>
 	/// Gets a value indicating whether this instance is written only once in binary mode.
@@ -29,12 +29,12 @@ public class FillNode : PNode
 	/// <value>
 	/// 	<c>true</c> this instance is written only once in binary mode; otherwise, <c>false</c>.
 	/// </value>
-	internal override bool IsBinaryUnique => false;
+	public override bool IsBinaryUnique => false;
 
 	/// <summary>
 	/// Reads this element binary from the reader.
 	/// </summary>
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		if (nodeLength != 0x0F) throw new PListFormatException();
 	}
@@ -42,7 +42,7 @@ public class FillNode : PNode
 	/// <summary>
 	/// Writes this node binary to the writer.
 	/// </summary>
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 	}
 
@@ -63,7 +63,7 @@ public class FillNode : PNode
 	/// Generates an object from its XML representation.
 	/// </summary>
 	/// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
-	internal override void ReadXml(System.Xml.XmlReader reader)
+	public override void ReadXml(System.Xml.XmlReader reader)
 	{
 		reader.ReadStartElement(XmlTag);
 	}
@@ -72,7 +72,7 @@ public class FillNode : PNode
 	/// Converts an object into its XML representation.
 	/// </summary>
 	/// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
-	internal override void WriteXml(System.Xml.XmlWriter writer)
+	public override void WriteXml(System.Xml.XmlWriter writer)
 	{
 		writer.WriteStartElement(XmlTag);
 		writer.WriteEndElement();

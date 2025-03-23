@@ -20,9 +20,9 @@ public class ArrayNode : PNode, IList<PNode>
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
-	internal override byte BinaryTag => 0x0A;
+	public override byte BinaryTag => 0x0A;
 
-	internal override int BinaryLength => _list.Count;
+	public override int BinaryLength => _list.Count;
 
 	/// <summary>
 	/// Gets a value indicating whether this instance is written only once in binary mode.
@@ -30,17 +30,17 @@ public class ArrayNode : PNode, IList<PNode>
 	/// <value>
 	/// 	<c>true</c> this instance is written only once in binary mode; otherwise, <c>false</c>.
 	/// </value>
-	internal override bool IsBinaryUnique => false;
+	public override bool IsBinaryUnique => false;
 
 	/// <summary>
 	/// Reads this element binary from the reader.
 	/// </summary>
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		throw new NotImplementedException("This type of node does not do it's own reading, refer to the binary reader.");
 	}
 
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 		throw new NotImplementedException("This type of node does not do it's own writing, refer to the binary writer.");
 	}
@@ -49,7 +49,7 @@ public class ArrayNode : PNode, IList<PNode>
 	/// Generates an object from its XML representation.
 	/// </summary>
 	/// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
-	internal override void ReadXml(XmlReader reader)
+	public override void ReadXml(XmlReader reader)
 	{
 		bool wasEmpty = reader.IsEmptyElement;
 		reader.Read();
@@ -75,7 +75,7 @@ public class ArrayNode : PNode, IList<PNode>
 	/// Converts an object into its XML representation.
 	/// </summary>
 	/// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
-	internal override void WriteXml(XmlWriter writer)
+	public override void WriteXml(XmlWriter writer)
 	{
 		writer.WriteStartElement(XmlTag);
 		for (int i = 0; i < Count; i++)

@@ -19,9 +19,9 @@ public sealed class DateNode : PNode<DateTime>
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
-	internal override byte BinaryTag => 3;
+	public override byte BinaryTag => 3;
 
-	internal override int BinaryLength => 3;
+	public override int BinaryLength => 3;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DateNode"/> class.
@@ -43,7 +43,7 @@ public sealed class DateNode : PNode<DateTime>
 	/// Parses the specified value from a given string, read from Xml.
 	/// </summary>
 	/// <param name="data">The string whis is parsed.</param>
-	internal override void Parse(string data)
+	public override void Parse(string data)
 	{
 		Value = DateTime.Parse(data, CultureInfo.InvariantCulture);
 	}
@@ -54,7 +54,7 @@ public sealed class DateNode : PNode<DateTime>
 	/// <returns>
 	/// The XML string representation of the Value.
 	/// </returns>
-	internal override string ToXmlString()
+	public override string ToXmlString()
 	{
 		return Value.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffZ");
 	}
@@ -62,7 +62,7 @@ public sealed class DateNode : PNode<DateTime>
 	/// <summary>
 	/// Reads this element binary from the reader.
 	/// </summary>
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		Debug.WriteLine("Unverified");
 
@@ -93,7 +93,7 @@ public sealed class DateNode : PNode<DateTime>
 	/// <summary>
 	/// Writes this element binary to the writer.
 	/// </summary>
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 		Debug.WriteLine("Unverified");
 

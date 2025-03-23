@@ -17,23 +17,23 @@ namespace PListNet
 		/// 	Gets the binary tag.
 		/// </summary>
 		/// <value>The binary tag.</value>
-		internal abstract byte BinaryTag { get; }
+		public abstract byte BinaryTag { get; }
 
 		/// <summary>
 		/// 	Gets the length of the binary representation.
 		/// </summary>
 		/// <value>The length of the binary.</value>
-		internal abstract int BinaryLength { get; }
+		public abstract int BinaryLength { get; }
 
-		internal abstract bool IsBinaryUnique { get; }
+		public abstract bool IsBinaryUnique { get; }
 
-		internal abstract void ReadXml(XmlReader reader);
+		public abstract void ReadXml(XmlReader reader);
 
-		internal abstract void WriteXml(XmlWriter writer);
+		public abstract void WriteXml(XmlWriter writer);
 
-		internal abstract void ReadBinary(Stream stream, int nodeLength);
+		public abstract void ReadBinary(Stream stream, int nodeLength);
 
-		internal abstract void WriteBinary(Stream stream);
+		public abstract void WriteBinary(Stream stream);
 	}
 
 	/// <summary>
@@ -47,13 +47,13 @@ namespace PListNet
 		/// <value>The value.</value>
 		public virtual T Value { get; set; }
 
-		internal override bool IsBinaryUnique => true;
+		public override bool IsBinaryUnique => true;
 
 	    /// <summary>
 		/// Generates an object from its XML representation.
 		/// </summary>
 		/// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
-		internal override void ReadXml(XmlReader reader)
+		public override void ReadXml(XmlReader reader)
 		{
 			reader.ReadStartElement();
 			Parse(reader.ReadContentAsString());
@@ -64,16 +64,16 @@ namespace PListNet
 		/// Converts an object into its XML representation.
 		/// </summary>
 		/// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
-		internal override void WriteXml(XmlWriter writer)
+		public override void WriteXml(XmlWriter writer)
 		{
 			writer.WriteStartElement(XmlTag);
 			writer.WriteValue(ToXmlString());
 			writer.WriteEndElement();
 		}
 
-		internal abstract void Parse(string data);
+		public abstract void Parse(string data);
 
-		internal abstract string ToXmlString();
+		public abstract string ToXmlString();
 
 		/// <summary>
 		/// Indicates whether the current object is equal to another object of the same type.

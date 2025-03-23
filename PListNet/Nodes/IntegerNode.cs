@@ -18,14 +18,14 @@ public class IntegerNode : PNode<long>
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
-	internal override byte BinaryTag => 1;
+	public override byte BinaryTag => 1;
 
 	/// <summary>
 	/// Gets the length of this PList element.
 	/// </summary>
 	/// <returns>The length of this PList element.</returns>
-	/// <remarks>Provided for internal use only.</remarks>
-	internal override int BinaryLength
+	/// <remarks>Provided for public use only.</remarks>
+	public override int BinaryLength
 	{
 		get
 		{
@@ -63,7 +63,7 @@ public class IntegerNode : PNode<long>
 	/// Parses the specified value from a given string, read from Xml.
 	/// </summary>
 	/// <param name="data">The string whis is parsed.</param>
-	internal override void Parse(string data)
+	public override void Parse(string data)
 	{
 		Value = long.Parse(data, CultureInfo.InvariantCulture);
 	}
@@ -74,7 +74,7 @@ public class IntegerNode : PNode<long>
 	/// <returns>
 	/// The XML string representation of the Value.
 	/// </returns>
-	internal override string ToXmlString()
+	public override string ToXmlString()
 	{
 		return Value.ToString(CultureInfo.InvariantCulture);
 	}
@@ -84,7 +84,7 @@ public class IntegerNode : PNode<long>
 	/// </summary>
 	/// <param name="stream">Stream.</param>
 	/// <param name="nodeLength">Node length.</param>
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		var buf = new byte[1 << nodeLength];
 		if (stream.Read(buf, 0, buf.Length) != buf.Length)
@@ -114,7 +114,7 @@ public class IntegerNode : PNode<long>
 	/// <summary>
 	/// Writes this element binary to the writer.
 	/// </summary>
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 		byte[] buf;
 		switch (BinaryLength)

@@ -18,9 +18,9 @@ public sealed class RealNode : PNode<double>
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
-	internal override byte BinaryTag => 2;
+	public override byte BinaryTag => 2;
 
-	internal override int BinaryLength => 3;
+	public override int BinaryLength => 3;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RealNode"/> class.
@@ -42,7 +42,7 @@ public sealed class RealNode : PNode<double>
 	/// Parses the specified value from a given string, read from Xml.
 	/// </summary>
 	/// <param name="data">The string whis is parsed.</param>
-	internal override void Parse(string data)
+	public override void Parse(string data)
 	{
 		Value = double.Parse(data, CultureInfo.InvariantCulture);
 	}
@@ -53,7 +53,7 @@ public sealed class RealNode : PNode<double>
 	/// <returns>
 	/// The XML string representation of the Value.
 	/// </returns>
-	internal override string ToXmlString()
+	public override string ToXmlString()
 	{
 		return Value.ToString(CultureInfo.InvariantCulture);
 	}
@@ -61,7 +61,7 @@ public sealed class RealNode : PNode<double>
 	/// <summary>
 	/// Reads this element binary from the reader.
 	/// </summary>
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		var buf = new byte[1 << nodeLength];
 		if (stream.Read(buf, 0, buf.Length) != buf.Length)
@@ -89,7 +89,7 @@ public sealed class RealNode : PNode<double>
 	/// <summary>
 	/// Writes this element binary to the writer.
 	/// </summary>
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 		var buf = EndianBitConverter.BigEndian.GetBytes(Value);
 		stream.Write(buf, 0, buf.Length);

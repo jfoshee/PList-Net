@@ -41,13 +41,13 @@ public class StringNode : PNode<string>
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
-	internal override byte BinaryTag => (byte)(IsUtf16 ? 6 : 5);
+	public override byte BinaryTag => (byte)(IsUtf16 ? 6 : 5);
 
 	/// <summary>
 	/// Gets the length of this PList element.
 	/// </summary>
 	/// <returns>The length of this PList element.</returns>
-	internal override int BinaryLength => Value.Length;
+	public override int BinaryLength => Value.Length;
 
 	/// <summary>
 	/// Gets or sets a value indicating whether this instance is UTF16.
@@ -98,12 +98,12 @@ public class StringNode : PNode<string>
 	/// Parses the specified value from a given string, read from Xml.
 	/// </summary>
 	/// <param name="data">The string which is parsed.</param>
-	internal override void Parse(string data)
+	public override void Parse(string data)
 	{
 		Value = data;
 	}
 
-	internal override void WriteXml(XmlWriter writer)
+	public override void WriteXml(XmlWriter writer)
 	{
 		// use "ustring" for UTF-16 characters (if XmlTag is not overridden)
 		var tag = XmlTag == "string" && IsUtf16 ? "ustring" : XmlTag;
@@ -118,7 +118,7 @@ public class StringNode : PNode<string>
 	/// <returns>
 	/// The XML string representation of the Value.
 	/// </returns>
-	internal override string ToXmlString()
+	public override string ToXmlString()
 	{
 		return Value;
 	}
@@ -126,7 +126,7 @@ public class StringNode : PNode<string>
 	/// <summary>
 	/// Reads this element binary from the reader.
 	/// </summary>
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		var buf = new byte[nodeLength * (BinaryTag == 5 ? 1 : 2)];
 		if (stream.Read(buf, 0, buf.Length) != buf.Length)
@@ -142,7 +142,7 @@ public class StringNode : PNode<string>
 	/// <summary>
 	/// Writes this element binary to the writer.
 	/// </summary>
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 		Encoding enc = IsUtf16 ? Encoding.BigEndianUnicode : Encoding.UTF8;
 		var buf = enc.GetBytes(Value);

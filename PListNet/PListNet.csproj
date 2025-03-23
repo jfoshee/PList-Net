@@ -9,7 +9,7 @@
 		<PackageProjectUrl>https://github.com/jfoshee/PList-Net</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/jfoshee/PList-Net.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageReleaseNotes>4.1.1 Fix StringNode.XmlTag overriding</PackageReleaseNotes>
+		<PackageReleaseNotes>4.2.0 Make overridable methods public</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.MD</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Copyright>© 2009-2025</Copyright>

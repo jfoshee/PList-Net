@@ -9,9 +9,9 @@ public class UidNode : PNode<ulong>
 {
 	public override string XmlTag => "uid";
 
-	internal override byte BinaryTag => 8;
+	public override byte BinaryTag => 8;
 
-	internal override int BinaryLength
+	public override int BinaryLength
 	{
 		get
 		{
@@ -41,12 +41,12 @@ public class UidNode : PNode<ulong>
 		Value = value;
 	}
 
-	internal override void Parse(string data)
+	public override void Parse(string data)
 	{
 		throw new NotImplementedException();
 	}
 
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		var buf = new byte[1 << nodeLength];
 		if (stream.Read(buf, 0, buf.Length) != buf.Length)
@@ -73,12 +73,12 @@ public class UidNode : PNode<ulong>
 		}
 	}
 
-	internal override string ToXmlString()
+	public override string ToXmlString()
 	{
 		return $"<dict><key>CF$UID</key><integer>{Value}</integer></dict>";
 	}
 
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 		byte[] buf;
 		switch (BinaryLength)

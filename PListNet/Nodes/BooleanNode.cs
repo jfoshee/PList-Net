@@ -17,9 +17,9 @@ public sealed class BooleanNode : PNode<bool>
 	/// Gets the binary typecode of this element.
 	/// </summary>
 	/// <value>The binary typecode of this element.</value>
-	internal override byte BinaryTag => 0;
+	public override byte BinaryTag => 0;
 
-	internal override int BinaryLength => Value ? 9 : 8;
+	public override int BinaryLength => Value ? 9 : 8;
 
 	/// <summary>
 	/// Gets a value indicating whether this instance is written only once in binary mode.
@@ -27,7 +27,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// <value>
 	/// 	<c>true</c> this instance is written only once in binary mode; otherwise, <c>false</c>.
 	/// </value>
-	internal override bool IsBinaryUnique => true;
+	public override bool IsBinaryUnique => true;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BooleanNode"/> class.
@@ -49,7 +49,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// Generates an object from its XML representation.
 	/// </summary>
 	/// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
-	internal override void ReadXml(XmlReader reader)
+	public override void ReadXml(XmlReader reader)
 	{
 		Parse(reader.LocalName);
 		reader.ReadStartElement();
@@ -59,7 +59,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// Converts an object into its XML representation.
 	/// </summary>
 	/// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
-	internal override void WriteXml(XmlWriter writer)
+	public override void WriteXml(XmlWriter writer)
 	{
 		// writing value as raw because Apple's parser expects no
 		// space before the closing tag, and the XmlWrites inserts one
@@ -72,7 +72,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// Parses the specified value from a given string, read from Xml.
 	/// </summary>
 	/// <param name="data">The string which is parsed.</param>
-	internal override void Parse(string data)
+	public override void Parse(string data)
 	{
 		Value = data == "true";
 	}
@@ -83,7 +83,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// <returns>
 	/// The XML string representation of the Value.
 	/// </returns>
-	internal override string ToXmlString()
+	public override string ToXmlString()
 	{
 		return Value ? "true" : "false";
 	}
@@ -91,7 +91,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// <summary>
 	/// Reads this element binary from the reader.
 	/// </summary>
-	internal override void ReadBinary(Stream stream, int nodeLength)
+	public override void ReadBinary(Stream stream, int nodeLength)
 	{
 		if (nodeLength != 8 && nodeLength != 9)
 		{
@@ -104,7 +104,7 @@ public sealed class BooleanNode : PNode<bool>
 	/// <summary>
 	/// Writes this element binary to the writer.
 	/// </summary>
-	internal override void WriteBinary(Stream stream)
+	public override void WriteBinary(Stream stream)
 	{
 	}
 }
