@@ -5,7 +5,7 @@ namespace PListNet.Internal;
 /// <summary>
 /// Singleton class which generates concrete <see cref="T:PListNet.PNode"/> from the Tag or TypeCode
 /// </summary>
-internal static class NodeFactory
+public static class NodeFactory
 {
 	private static readonly Dictionary<string, Type> _xmlTags = new Dictionary<string, Type>();
 	private static readonly Dictionary<byte, Type> _binaryTags = new Dictionary<byte, Type>();
@@ -14,7 +14,17 @@ internal static class NodeFactory
 	/// Initializes the <see cref="NodeFactory"/> class.
 	/// </summary>
 	static NodeFactory()
+    {
+        Reset();
+    }
+
+	/// <summary>
+	/// Resets the factory to default tags.
+	/// </summary>
+	internal static void Reset()
 	{
+		_xmlTags.Clear();
+		_binaryTags.Clear();
 		Register(new DictionaryNode());
 		Register(new IntegerNode());
 		Register(new RealNode());
@@ -31,28 +41,29 @@ internal static class NodeFactory
 		Register("false", 0, new BooleanNode());
 	}
 
-	/// <summary>
-	/// Registers the specified element.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="node">The node.</param>
-	private static void Register<T>(T node) where T : PNode, new()
+    /// <summary>
+    /// Registers the specified element type by its own XmlTag and BinaryTag.
+    /// If the tag already exists, it will be overwritten.
+    /// </summary>
+    /// <typeparam name="T">The node type to register.</typeparam>
+    /// <param name="node">An instance of the node used to extract tags.</param>
+    public static void Register<T>(T node) where T : PNode, new()
 	{
-		if (!_xmlTags.ContainsKey(node.XmlTag)) _xmlTags.Add(node.XmlTag, node.GetType());
-		if (!_binaryTags.ContainsKey(node.BinaryTag)) _binaryTags.Add(node.BinaryTag, node.GetType());
+		Register(node.XmlTag, node.BinaryTag, node);
 	}
 
 	/// <summary>
-	/// Registers the specified element.
+	/// Registers the specified element type with custom XML and binary tags.
+	/// If the tag already exists, it will be overwritten.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="xmlTag">The tag.</param>
-	/// <param name="binaryTag">The type code.</param>
-	/// <param name="node">The element.</param>
-	private static void Register<T>(string xmlTag, byte binaryTag, T node) where T : PNode, new()
+	/// <typeparam name="T">The node type to register.</typeparam>
+	/// <param name="xmlTag">The XML tag to associate with the node type.</param>
+	/// <param name="binaryTag">The binary tag to associate with the node type.</param>
+	/// <param name="node">An instance of the node to get the type from.</param>
+	public static void Register<T>(string xmlTag, byte binaryTag, T node) where T : PNode, new()
 	{
-		if (!_xmlTags.ContainsKey(xmlTag)) _xmlTags.Add(xmlTag, node.GetType());
-		if (!_binaryTags.ContainsKey(binaryTag)) _binaryTags.Add(binaryTag, node.GetType());
+		_xmlTags[xmlTag] = node.GetType();
+		_binaryTags[binaryTag] = node.GetType();
 	}
 
 	/// <summary>

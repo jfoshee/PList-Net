@@ -2,14 +2,14 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>4.2.0</Version>
+		<Version>4.3.0</Version>
+		<PackageReleaseNotes>4.3.0 expose `NodeFactory.Register` so custom tags can be loaded</PackageReleaseNotes>
 		<Description>.NET Library for working with Apple *.plist files.</Description>
 		<PackageId>PListNet.CustomTag</PackageId>
 		<Authors>Vijay Santhanam, Christian Ecker, Michael Teper</Authors>
 		<PackageProjectUrl>https://github.com/jfoshee/PList-Net</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/jfoshee/PList-Net.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageReleaseNotes>4.2.0 Unseal PNodes and make overridable methods public</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.MD</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Copyright>© 2009-2025</Copyright>
@@ -17,6 +17,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<!-- <Nullable>enable</Nullable> -->
 	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\LICENSE.MD" Pack="true" PackagePath="" />
